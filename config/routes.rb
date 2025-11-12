@@ -1,9 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
   devise_for :users
-  authenticate :user, lambda { |u| u.admin? } do
-    mount Sidekiq::Web => '/sidekiq'
-  end
+  # Sidekiq::Web authentication is handled by Rack middleware in config/initializers/sidekiq.rb
+  mount Sidekiq::Web => '/sidekiq'
 
   namespace :api do
     namespace :v1 do

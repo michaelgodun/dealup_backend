@@ -28,5 +28,10 @@ module Backend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Add session and cookie middleware for Sidekiq::Web
+    # This is required because Sidekiq::Web needs sessions for authentication
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_dealup_session', same_site: :lax
   end
 end
