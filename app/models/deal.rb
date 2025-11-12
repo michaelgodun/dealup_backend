@@ -1,8 +1,5 @@
 class Deal < ApplicationRecord
-  CATEGORIES = [
-    'Electronics', 'Sports', 'Fashion', 'Books', 'Home',
-    'Gaming', 'Health & Beauty', 'Automotive', 'Food & Drinks', 'Other'
-  ].freeze
+  CATEGORIES = %w[Electronics Gaming Accessories Computers Audio Home Fashion Sports Books Toys].freeze
 
   belongs_to :user
   has_many :comments
@@ -23,8 +20,9 @@ class Deal < ApplicationRecord
   def score
     votes.sum(:value)
   end
+
   def hot?
-    positive_votes - negative_votes >= 100
+    score > 20
   end
 
   private

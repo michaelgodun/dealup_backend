@@ -11,11 +11,13 @@ require "open-uri"
 
 # Users
 admin = User.create!({
+                       username: 'michal',
                        email: 'admin@example.com',
                        password: 'password'
                      })
 
 user = User.create!({
+                      username: 'user',
                       email: 'user@example.com',
                       password: 'password'
                     })

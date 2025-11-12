@@ -12,6 +12,6 @@ json.array! @deals do |deal|
   json.start_date deal.start_date
   json.end_date deal.end_date
   json.created_at deal.created_at
-  json.image deal.images.attached? ? rails_blob_url(deal.images.first) : nil
+  json.image_url deal.images.attached? ? rails_blob_url(deal.images.first) : nil
   json.comments_count deal.comments.size
 end
