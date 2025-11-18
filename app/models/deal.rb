@@ -1,8 +1,8 @@
 class Deal < ApplicationRecord
-  CATEGORIES = %w[Electronics Gaming Accessories Computers Audio Home Fashion Sports Books Toys].freeze
+  CATEGORIES = %w[Electronics Gaming Accessories Computers Audio Home Fashion Sports Books Toys Fitness].freeze
 
   belongs_to :user
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
 
   has_many_attached :images
@@ -10,6 +10,17 @@ class Deal < ApplicationRecord
   validates :title, :description, :price, presence: true
   validates :category, inclusion: { in: CATEGORIES, message: "%{value} is not a valid category" }
   validate :url_validation
+
+  scope :hot, -> {
+    where("(SELECT COALESCE(SUM(value), 0) FROM votes WHERE votes.deal_id = deals.id) > 3")
+  }
+
+  enum :status, {
+    draft: 0,
+    active: 1,
+    expired: 2,
+    archived: 3
+  }, default: 0
 
   def discount
     return nil unless original_price.present? && price.present? && original_price > 0
@@ -22,7 +33,7 @@ class Deal < ApplicationRecord
   end
 
   def hot?
-    score > 20
+    score > 3
   end
 
   private

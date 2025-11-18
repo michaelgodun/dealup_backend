@@ -14,4 +14,7 @@ json.array! @deals do |deal|
   json.created_at deal.created_at
   json.image_url deal.images.attached? ? rails_blob_url(deal.images.first) : nil
   json.comments_count deal.comments.size
+  json.user do
+    json.extract! deal.user, :id, :username
+  end
 end

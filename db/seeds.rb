@@ -13,7 +13,8 @@ require "open-uri"
 admin = User.create!({
                        username: 'michal',
                        email: 'admin@example.com',
-                       password: 'password'
+                       password: 'password',
+                       admin: true
                      })
 
 user = User.create!({
@@ -21,6 +22,32 @@ user = User.create!({
                       email: 'user@example.com',
                       password: 'password'
                     })
+
+user1 = User.create!({
+                       username: 'user1',
+                       email: 'user1@example.com',
+                       password: 'password'
+                     })
+user2 = User.create!({
+                       username: 'user2',
+                       email: 'user2@example.com',
+                       password: 'password'
+                     })
+user3 = User.create!({
+                       username: 'user3',
+                       email: 'user3@example.com',
+                       password: 'password'
+                     })
+user4 = User.create!({
+                       username: 'user4',
+                       email: 'user4@example.com',
+                       password: 'password'
+                     })
+user5 = User.create!({
+                       username: 'user5',
+                       email: 'user5@example.com',
+                       password: 'password'
+                     })
 
 # Helper do dodawania obrazów z URL
 def attach_image(record, url, filename)
@@ -39,8 +66,6 @@ deal1 = Deal.create!(
   description: "Latest iPhone at a great price. All colors available. 24-month warranty.",
   price: 4199.00,
   original_price: 5499.00,
-  positive_votes: 342,
-  negative_votes: 0,
   views: 12453,
   category: "Electronics"
 )
@@ -52,8 +77,6 @@ deal2 = Deal.create!(
   description: "PS5 console with two hit games. Official distributor. Immediate shipping.",
   price: 2399.00,
   original_price: 2899.00,
-  positive_votes: 256,
-  negative_votes: 0,
   views: 8932,
   category: "Gaming"
 )
@@ -65,8 +88,6 @@ deal3 = Deal.create!(
   description: "Smartwatch with advanced health features. IP68 water resistance.",
   price: 899.00,
   original_price: 1299.00,
-  positive_votes: 189,
-  negative_votes: 0,
   views: 6421,
   category: "Electronics"
 )
@@ -78,8 +99,6 @@ deal4 = Deal.create!(
   description: "Apple ultrabook with M2 processor. 8GB RAM, 256GB SSD. Perfect for work and entertainment.",
   price: 4899.00,
   original_price: 5999.00,
-  positive_votes: 412,
-  negative_votes: 0,
   views: 15678,
   category: "Electronics"
 )
@@ -91,8 +110,6 @@ deal5 = Deal.create!(
   description: "Best headphones with active noise cancellation. Highest level of wearing comfort.",
   price: 1199.00,
   original_price: 1599.00,
-  positive_votes: 278,
-  negative_votes: 0,
   views: 9234,
   category: "Electronics"
 )
@@ -104,16 +121,166 @@ deal6 = Deal.create!(
   description: "Powerful vacuum with laser detection. Battery up to 60 minutes. HEPA filter.",
   price: 2299.00,
   original_price: 2999.00,
-  positive_votes: 156,
-  negative_votes: 0,
   views: 5821,
   category: "Home"
 )
 attach_image(deal6, "https://images.unsplash.com/photo-1558317374-067fb5f30001?w=400&h=300&fit=crop", "dyson_v15.jpg")
 
+# Electronics
+deal7 = Deal.create!(
+  user: admin,
+  title: "Sony WH-1000XM4 Wireless Headphones",
+  description: "Industry-leading noise cancellation. 30-hour battery life. Touch controls.",
+  price: 279.99,
+  original_price: 349.99,
+  views: 4237,
+  category: "Electronics"
+)
+attach_image(deal7, "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop", "sony_headphones.jpg")
+
+# Gaming
+deal8 = Deal.create!(
+  user: admin,
+  title: "PlayStation 5 Digital Edition",
+  description: "Next-gen gaming console. 825GB SSD. 4K gaming and entertainment.",
+  price: 399.99,
+  original_price: 499.99,
+  views: 8923,
+  category: "Gaming"
+)
+attach_image(deal8, "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop", "ps5_digital.jpg")
+
+# Computers
+deal9 = Deal.create!(
+  user: admin,
+  title: "MacBook Air M2 13-inch",
+  description: "Apple M2 chip. 8GB RAM, 256GB SSD. Retina display. All-day battery.",
+  price: 999.00,
+  original_price: 1199.00,
+  views: 6542,
+  category: "Computers"
+)
+attach_image(deal9, "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop", "macbook_air.jpg")
+
+# Home
+deal10 = Deal.create!(
+  user: admin,
+  title: "Ninja Foodi 8-in-1 Digital Air Fryer",
+  description: "Pressure cooker and air fryer combo. 6.5QT capacity. Digital controls.",
+  price: 149.99,
+  original_price: 199.99,
+  views: 3128,
+  category: "Home"
+)
+attach_image(deal10, "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop", "ninja_foodi.jpg")
+
+# Fitness
+deal11 = Deal.create!(
+  user: admin,
+  title: "Peloton Bike Basic Package",
+  description: "Connected fitness bike with 22\" touchscreen. Live and on-demand classes.",
+  price: 1445.00,
+  original_price: 1745.00,
+  views: 2876,
+  category: "Fitness"
+)
+attach_image(deal11, "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop", "peloton_bike.jpg")
+
+# Audio
+deal12 = Deal.create!(
+  user: admin,
+  title: "Sonos Beam Soundbar - Gen 2",
+  description: "Compact smart soundbar with Dolby Atmos. Voice control compatible.",
+  price: 399.00,
+  original_price: 499.00,
+  views: 1987,
+  category: "Audio"
+)
+attach_image(deal12, "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop", "sonos_beam.jpg")
+
+# Fashion
+deal13 = Deal.create!(
+  user: admin,
+  title: "Nike Air Force 1 '07 SE",
+  description: "Classic white leather sneakers. Comfortable cushioning. Timeless design.",
+  price: 89.99,
+  original_price: 119.99,
+  views: 5421,
+  category: "Fashion"
+)
+attach_image(deal13, "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop", "nike_af1.jpg")
+
+# Sports
+deal14 = Deal.create!(
+  user: admin,
+  title: "Yeti Tundra 45 Cooler",
+  description: "Rotomolded construction. Bear-proof design. Keeps ice for days.",
+  price: 274.99,
+  original_price: 324.99,
+  views: 1654,
+  category: "Sports"
+)
+attach_image(deal14, "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop", "yeti_cooler.jpg")
+
+# Electronics
+deal15 = Deal.create!(
+  user: admin,
+  title: "iPad Air 5th Generation",
+  description: "M1 chip. 10.9-inch Liquid Retina display. 5G capable. Stunning performance.",
+  price: 549.00,
+  original_price: 699.00,
+  views: 3876,
+  category: "Electronics"
+)
+attach_image(deal15, "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop", "ipad_air.jpg")
+
+# Home
+deal16 = Deal.create!(
+  user: admin,
+  title: "Roomba j7+ Self-Emptying Robot Vacuum",
+  description: "Avoids cords and pet waste. Self-emptying base. Smart mapping.",
+  price: 599.00,
+  original_price: 799.00,
+  views: 2987,
+  category: "Home"
+)
+# Option 1: Different robot vacuum image
+attach_image(deal16, "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop", "roomba_j7.jpg")
 # Comments
 Comment.create!(deal: deal1, user: user, content: "Amazing deal, just bought mine!")
 Comment.create!(deal: deal1, user: admin, content: "Thanks for shopping with us!")
 Comment.create!(deal: deal2, user: user, content: "Bundle looks great, excited to get it.")
 Comment.create!(deal: deal4, user: admin, content: "MacBook M2 is on fire, highly recommended!")
+# Comments for deal6 (Dyson V15)
+Comment.create!(deal: deal6, user: user, content: "The laser detection is a game changer for pet hair!")
+Comment.create!(deal: deal6, user: admin, content: "One of our best-selling vacuums this season!")
+Comment.create!(deal: deal6, user: user, content: "Battery life is incredible, worth every penny.")
 
+# Comments for deal7 (Sony Headphones)
+Comment.create!(deal: deal7, user: user, content: "Noise cancellation is mind-blowing on these!")
+Comment.create!(deal: deal7, user: admin, content: "Perfect for travel and daily commutes.")
+Comment.create!(deal: deal7, user: user, content: "Comfortable for all-day wear, highly recommend.")
+
+# Comments for deal8 (PS5 Digital)
+Comment.create!(deal: deal8, user: user, content: "Finally got one! The load times are insane!")
+Comment.create!(deal: deal8, user: admin, content: "Limited stock available at this price!")
+Comment.create!(deal: deal8, user: user, content: "Digital edition is perfect for my all-digital library.")
+
+# Comments for deal9 (MacBook Air)
+Comment.create!(deal: deal9, user: user, content: "M2 chip is ridiculously fast for photo editing.")
+Comment.create!(deal: deal9, user: admin, content: "Students get an additional $50 off with EDU discount!")
+Comment.create!(deal: deal9, user: user, content: "Battery lasts through my entire work day, love it!")
+
+# Comments for deal10 (Ninja Foodi)
+Comment.create!(deal: deal10, user: user, content: "This replaced 3 appliances in my kitchen!")
+Comment.create!(deal: deal10, user: admin, content: "Great for healthy air-fried meals!")
+
+Vote.create!(deal: deal1, user: user1, value: 1)
+Vote.create!(deal: deal1, user: user2, value: 1)
+Vote.create!(deal: deal1, user: user3, value: 1)
+Vote.create!(deal: deal1, user: user4, value: 1)
+
+Vote.create!(deal: deal2, user: user1, value: -1)
+Vote.create!(deal: deal2, user: user2, value: -1)
+Vote.create!(deal: deal2, user: user3, value: -1)
+Vote.create!(deal: deal2, user: user4, value: -1)

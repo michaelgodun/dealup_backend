@@ -36,8 +36,13 @@ gem "image_processing", "~> 1.2"
 gem "rack-cors"
 gem "devise", "~> 4.9"
 gem "jwt"
+gem "cancancan"
+gem "kaminari"
+gem "actioncable"
+gem "csv"
+gem "redis"
 gem "sidekiq"
-
+gem "sidekiq-cron"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

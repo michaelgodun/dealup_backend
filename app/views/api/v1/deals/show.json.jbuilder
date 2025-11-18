@@ -1,5 +1,7 @@
 json.id @deal.id
-json.user_id @deal.user_id
+json.user do
+  json.extract! @deal.user, :id, :username
+end
 json.title @deal.title
 json.description @deal.description
 json.price @deal.price

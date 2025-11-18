@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_12_160744) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_18_153112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -62,12 +62,22 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_12_160744) do
     t.integer "positive_votes", default: 0
     t.decimal "price", precision: 10, scale: 2, null: false
     t.datetime "start_date"
+    t.integer "status", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.string "url"
     t.bigint "user_id", null: false
     t.integer "views", default: 0
     t.index ["user_id"], name: "index_deals_on_user_id"
+  end
+
+  create_table "exports", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "format", null: false
+    t.string "status", default: "pending"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_exports_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -79,6 +89,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_12_160744) do
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
     t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -101,6 +112,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_12_160744) do
   add_foreign_key "comments", "deals"
   add_foreign_key "comments", "users"
   add_foreign_key "deals", "users"
+  add_foreign_key "exports", "users"
   add_foreign_key "votes", "deals"
   add_foreign_key "votes", "users"
 end

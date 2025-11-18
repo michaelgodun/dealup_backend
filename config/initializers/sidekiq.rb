@@ -18,3 +18,12 @@ Sidekiq::Web.use Rack::Auth::Basic, "Protected Area" do |username, password|
   user = User.find_by(email: username)
   user&.valid_password?(password) && user.admin?
 end
+
+require 'sidekiq'
+require 'sidekiq-cron'
+
+Sidekiq::Cron::Job.create(
+  name: 'Deal Views Job - every minute',
+  cron: '*/1 * * * *',
+  class: 'DealViewsJob'
+)

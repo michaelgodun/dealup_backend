@@ -1,26 +1,26 @@
 class Api::V1::DealsController < Api::V1::ApiBaseController
   skip_before_action :authenticate_token, only: [:index, :show]
-  before_action :set_deal, only: %i[show update destroy vote]
-
+  load_and_authorize_resource
   def index
-    @deals = Deal.all.includes(:comments, images_attachments: :blob).order(created_at: :desc)
+    @deals = @deals.active.includes(:comments).order(created_at: :desc).page(params[:page] || 1).per(params[:per_page] || 10)
   end
 
   def show
+    redis_key = "deal:#{@deal.id}:views"
+    $redis.incr(redis_key)
   end
 
   def create
-    @deal = Deal.new(deal_params)
-    @deal.user_id = current_user.id
+    @deal.user = current_user
     if @deal.save
-      render status: :created
+      render json: @deal, status: :created
     else
       render json: { errors: @deal.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
+
   def update
-    @deal.user_id = current_user.id
     images_meta = JSON.parse(params.dig(:deal, :images_meta) || "[]")
     new_files = params.dig(:deal, :images) || []
 
@@ -31,9 +31,7 @@ class Api::V1::DealsController < Api::V1::ApiBaseController
       image&.purge
     end
 
-    new_files.each do |file|
-      @deal.images.attach(file)
-    end
+    new_files.each { |file| @deal.images.attach(file) }
 
     if @deal.update(deal_params.except(:images, :images_meta))
       render json: @deal
@@ -50,18 +48,15 @@ class Api::V1::DealsController < Api::V1::ApiBaseController
   def vote
     vote = @deal.votes.find_or_initialize_by(user: current_user)
     vote.value = params[:value]
+
     if vote.save
       render json: vote
     else
-      render json: { error: vote.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: vote.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private
-
-  def set_deal
-    @deal = Deal.find(params[:id])
-  end
 
   def deal_params
     params.require(:deal).permit(

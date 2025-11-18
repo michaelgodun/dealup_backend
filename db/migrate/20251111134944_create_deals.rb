@@ -9,10 +9,9 @@ class CreateDeals < ActiveRecord::Migration[8.1]
       t.decimal :original_price, precision: 10, scale: 2
       t.datetime :start_date
       t.datetime :end_date
-      t.integer :positive_votes, default: 0
-      t.integer :negative_votes, default: 0
       t.integer :views, default: 0
       t.string :category, null: false
+      t.integer :status, default: 0, null: false
 
       t.timestamps
     end
