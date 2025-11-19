@@ -13,6 +13,7 @@ class Api::V1::DealsController < Api::V1::ApiBaseController
   def create
     @deal.user = current_user
     if @deal.save
+      OpenAiValidationJob.perform_later(@deal) if Rails.configuration.openai_verification_enabled
       render json: @deal, status: :created
     else
       render json: { errors: @deal.errors.full_messages }, status: :unprocessable_entity
@@ -34,6 +35,7 @@ class Api::V1::DealsController < Api::V1::ApiBaseController
     new_files.each { |file| @deal.images.attach(file) }
 
     if @deal.update(deal_params.except(:images, :images_meta))
+      OpenAiValidationJob.perform_later(@deal) if Rails.configuration.openai_verification_enabled
       render json: @deal
     else
       render json: { errors: @deal.errors.full_messages }, status: :unprocessable_entity

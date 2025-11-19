@@ -27,3 +27,8 @@ Sidekiq::Cron::Job.create(
   cron: '*/1 * * * *',
   class: 'DealViewsJob'
 )
+Sidekiq::Cron::Job.create(
+  name: 'Refresh Dashboard Cache Job - every minute',
+  cron: '*/1 * * * *',
+  class: 'RefreshDashboardCacheJob'
+)

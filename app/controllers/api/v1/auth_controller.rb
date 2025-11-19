@@ -28,13 +28,19 @@ class Api::V1::AuthController < Api::V1::ApiBaseController
 
   def register
     user = User.new(register_params)
+
     if user.save
       access_token = JsonWebToken.encode({ sub: user.id })
       refresh_token = JsonWebToken.encode({ sub: user.id }, 7.days.from_now)
       user.update!(refresh_token: refresh_token)
-      render json: { user: { id: user.id, username: user.username, email: user.email }, access_token: access_token, refresh_token: refresh_token}, status: :created
+
+      render json: {
+        user: { id: user.id, username: user.username, email: user.email },
+        access_token: access_token,
+        refresh_token: refresh_token
+      }, status: :created
     else
-      render json: { errors: [ "Unable to create account" ] }, status: :unprocessable_entity
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

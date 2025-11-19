@@ -33,5 +33,7 @@ module Backend
     # This is required because Sidekiq::Web needs sessions for authentication
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_dealup_session', same_site: :lax
+
+    config.openai_verification_enabled = ENV.fetch("ENABLE_OPENAI_VERIFICATION", 'false').casecmp('true').zero?
   end
 end

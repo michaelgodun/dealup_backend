@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[show update]
       namespace :admin do
         resources :exports, only: %i[show]
+        resources :dashboards, only: %i[index]
         resources :users, only: [:index, :show, :destroy] do
           collection do
             post :csv

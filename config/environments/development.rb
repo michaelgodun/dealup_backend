@@ -74,4 +74,5 @@ Rails.application.configure do
   config.active_job.queue_adapter = :sidekiq
 
   Rails.application.routes.default_url_options[:host] = "http://localhost:3000"
+  config.cache_store = :redis_cache_store, { url: "redis://localhost:6379/1" }
 end

@@ -9,6 +9,7 @@ json.array! @deals do |deal|
   json.views deal.views
   json.hot deal.hot?
   json.category deal.category
+  json.url deal.url
   json.start_date deal.start_date
   json.end_date deal.end_date
   json.created_at deal.created_at

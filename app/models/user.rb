@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :exports, dependent: :destroy
   validates :username, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
 
   enum :status, { active: 0, inactive: 1, banned: 2, pending: 3 }
   scope :recent, -> { where(created_at: 7.days.ago..) }
