@@ -16,7 +16,7 @@ class Api::V1::Admin::UsersController < Api::V1::Admin::BaseController
   def destroy
     user = User.find(params[:id])
     user.destroy!
-    render json: { message: "User deleted" }
+    render json: { id: user.id, message: "User deleted" }
   end
 
   def csv

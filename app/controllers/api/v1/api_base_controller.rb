@@ -11,7 +11,10 @@ class Api::V1::ApiBaseController < ActionController::API
     if payload[:error]
       render json: { error: [payload[:error]] }, status: :unauthorized
     else
-      @current_user = User.find(payload["sub"])
+      @current_user = User.find_by(id: payload["sub"])
+      unless @current_user
+        render json: { error: ["User not found"] }, status: :unauthorized
+      end
     end
   end
 

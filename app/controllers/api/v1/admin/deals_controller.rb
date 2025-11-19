@@ -16,7 +16,7 @@ class Api::V1::Admin::DealsController < Api::V1::Admin::BaseController
   def destroy
     deal = Deal.find(params[:id])
     deal.destroy!
-    render json: { message: "Deal deleted" }
+    render json: { id: deal.id, message: "Deal deleted" }
   end
 
   def activate
