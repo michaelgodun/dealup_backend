@@ -15,10 +15,12 @@ class Ability
       can :read, Deal
       can :read, Comment
       can :create, Vote
+      can :manage, SearchHistory, user_id: user.id
     else
       can :read, Deal
       can :read, Comment
       can :read, User
+      can :read, SearchHistory
     end
   end
 end

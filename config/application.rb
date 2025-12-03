@@ -34,6 +34,7 @@ module Backend
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_dealup_session', same_site: :lax
 
+    config.frontend_url = ENV.fetch("FRONTEND_URL", 'http://localhost:5173')
     config.openai_verification_enabled = ENV.fetch("ENABLE_OPENAI_VERIFICATION", 'false').casecmp('true').zero?
   end
 end

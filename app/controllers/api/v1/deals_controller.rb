@@ -2,7 +2,8 @@ class Api::V1::DealsController < Api::V1::ApiBaseController
   skip_before_action :authenticate_token, only: [:index, :show]
   load_and_authorize_resource
   def index
-    @deals = @deals.active.includes(:comments).order(created_at: :desc).page(params[:page] || 1).per(params[:per_page] || 10)
+    search_query = params[:query]
+    @deals = @deals.active.includes(:comments).search(search_query).order(created_at: :desc).page(params[:page] || 1).per(params[:per_page] || 10)
   end
 
   def show

@@ -36,8 +36,13 @@ class Deal < ApplicationRecord
     score > 3
   end
 
-  private
+  def self.search(search_query)
+    sanitized_query = "%#{search_query.to_s.strip.downcase}%"
 
+    where('title ILIKE ? OR description ILIKE ? OR category ILIKE ?', sanitized_query, sanitized_query, sanitized_query)
+  end
+
+  private
   def url_validation
     return if url.blank?
 

@@ -14,39 +14,46 @@ admin = User.create!({
                        username: 'michal',
                        email: 'admin@example.com',
                        password: 'password',
+                       password_confirmation: 'password',
                        admin: true
                      })
 
 user = User.create!({
                       username: 'user',
                       email: 'user@example.com',
-                      password: 'password'
+                      password: 'password',
+                      password_confirmation: 'password',
                     })
 
 user1 = User.create!({
                        username: 'user1',
                        email: 'user1@example.com',
-                       password: 'password'
+                       password: 'password',
+                       password_confirmation: 'password',
                      })
 user2 = User.create!({
                        username: 'user2',
                        email: 'user2@example.com',
-                       password: 'password'
+                       password: 'password',
+                       password_confirmation: 'password',
                      })
 user3 = User.create!({
                        username: 'user3',
                        email: 'user3@example.com',
-                       password: 'password'
+                       password: 'password',
+                       password_confirmation: 'password',
                      })
 user4 = User.create!({
                        username: 'user4',
                        email: 'user4@example.com',
-                       password: 'password'
+                       password: 'password',
+                       password_confirmation: 'password',
                      })
 user5 = User.create!({
                        username: 'user5',
                        email: 'user5@example.com',
-                       password: 'password'
+                       password: 'password',
+                       password_confirmation: 'password',
                      })
 
 users = [ user, user1, user2, user3, user4, user5 ]

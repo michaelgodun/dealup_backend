@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_18_153112) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_03_102044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,13 +53,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_153112) do
   end
 
   create_table "deals", force: :cascade do |t|
-    t.string "category"
+    t.string "category", null: false
     t.datetime "created_at", null: false
-    t.text "description"
+    t.text "description", null: false
     t.datetime "end_date"
-    t.integer "negative_votes", default: 0
     t.decimal "original_price", precision: 10, scale: 2
-    t.integer "positive_votes", default: 0
     t.decimal "price", precision: 10, scale: 2, null: false
     t.datetime "start_date"
     t.integer "status", default: 0, null: false
@@ -80,20 +78,39 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_153112) do
     t.index ["user_id"], name: "index_exports_on_user_id"
   end
 
+  create_table "search_histories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "query", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_search_histories_on_user_id"
+  end
+
+  create_table "user_accounts", force: :cascade do |t|
+    t.string "access_token"
+    t.string "auth_protocol", default: "oauth2"
+    t.datetime "created_at", null: false
+    t.datetime "expires_at"
+    t.string "provider"
+    t.string "provider_account_id"
+    t.string "refresh_token"
+    t.string "scope"
+    t.string "token_type", default: "Bearer"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_user_accounts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.string "password_digest"
     t.string "refresh_token"
-    t.datetime "remember_created_at"
-    t.datetime "reset_password_sent_at"
-    t.string "reset_password_token"
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
     t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "votes", force: :cascade do |t|
@@ -113,6 +130,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_18_153112) do
   add_foreign_key "comments", "users"
   add_foreign_key "deals", "users"
   add_foreign_key "exports", "users"
+  add_foreign_key "search_histories", "users"
+  add_foreign_key "user_accounts", "users"
   add_foreign_key "votes", "deals"
   add_foreign_key "votes", "users"
 end

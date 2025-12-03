@@ -1,8 +1,9 @@
 module JsonWebToken
   SECRET_KEY = Rails.application.credentials.dig(:secret_key_base)
 
-  def self.encode(payload, exp = 5.minutes.from_now.to_i)
+  def self.encode(payload, exp = 5.minutes.from_now.to_i, admin = false)
     payload[:exp] = exp.to_i
+    payload[:admin] = admin
     JWT.encode(payload, SECRET_KEY)
   end
 
